@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-emi
+  labels:
+    run: frontend-emi
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    run: frontend-emi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontend-emi
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: frontend-emi
+    spec:
+      containers:
+      - name: frontend-emi
+        image: nebulae/tpm-emi:0.0.4
+        ports:
+        - containerPort: 80

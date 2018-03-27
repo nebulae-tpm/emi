@@ -1,0 +1,53 @@
+version: 2
+jobs:
+  build:    
+    working_directory: /workspace
+    docker:
+      - image: node:9.8.0
+        command: bash
+        user: node     
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - run:
+          name: Installing NebulaE cli & Compose FrontEnd & push docker-hub
+          command: |
+            echo $GCP_SERVICE_ACCOUNT_PROD | base64 --decode --ignore-garbage > /root/gcloud-service-key.json
+            npm config set prefix '~/.npm-global'
+            export PATH=~/.npm-global/bin:$PATH
+            source ~/.profile
+            npm install -g nebulae
+            nebulae compose-ui production --shell-type=FUSE2_ANGULAR --shell-repo=https://github.com/nebulae-tpm/emi.git --frontend-id=$CIRCLE_PROJECT_REPONAME --output-dir=/tmp/nebulae/emi/ --store-type=GCP_DATASTORE --gcp-service-account-token=/root/gcloud-service-key.json      
+            export DOCKERHUB_NAMESPACE=$DOCKERHUB_NAMESPACE
+            export DOCKERHUB_USER=$DOCKERHUB_USER
+            export DOCKERHUB_PASS=$DOCKERHUB_PASS
+            export FRONTEND_SHELL_PATH=/tmp/nebulae/emi
+            sh deployment/docker/build-docker-hub.sh
+  deploy_prod:
+      working_directory: /workspace
+      docker:
+        - image: google/cloud-sdk:latest
+      steps:
+        - checkout
+        - run:
+            name: Setup gcloud & kubectl
+            command: |
+              echo $GCP_SERVICE_ACCOUNT_PROD | base64 --decode --ignore-garbage > /root/gcloud-service-key.json
+              gcloud auth activate-service-account --key-file /root/gcloud-service-key.json            
+              gcloud --quiet config set project $GKE_PROJECT_PROD
+              gcloud --quiet config set compute/zone $GKE_ZONE_PROD
+              gcloud --quiet container clusters get-credentials $GKE_CLUSTER
+        - run:
+            name: Deploy on Kubernetes
+            command: |
+              kubectl apply -f /workspace/deployment/gke/
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          context: TPM
+      - deploy_prod:
+          context: TPM
+          requires:
+            - build

@@ -17,8 +17,7 @@ jobs:
             npm install -g nebulae
             npm install -g @angular/cli
             nebulae compose-ui production --shell-type=FUSE2_ANGULAR --shell-repo=https://github.com/nebulae-tpm/emi.git --frontend-id=$CIRCLE_PROJECT_REPONAME --output-dir=/tmp/nebulae/emi/ --store-type=GCP_DATASTORE --gcp-service-account-token=/tmp/gcloud-service-key.json      
-            ls /tmp 
-            ls /tmp/nebulae
+            ls /tmp/nebulae/emi/dist
       # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is 
@@ -40,8 +39,7 @@ jobs:
       - run:
           name:  push docker-hub
           command: |      
-            ls /tmp 
-            ls /tmp/nebulae 
+            ls /tmp/dist/ 
             export DOCKERHUB_NAMESPACE=$DOCKERHUB_NAMESPACE
             export DOCKERHUB_USER=$DOCKERHUB_USER
             export DOCKERHUB_PASS=$DOCKERHUB_PASS

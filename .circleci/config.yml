@@ -27,11 +27,13 @@ jobs:
           # Must be relative path from root
           paths:
             - nebulae          
-  build-docker:    
+  build-docker:
     working_directory: /tmp
     docker:
       - image: docker:17.05.0-ce-git
     steps:
+      - checkout:
+        path: /tmp/nebulae/emi
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: nebulae
@@ -44,7 +46,7 @@ jobs:
             export DOCKERHUB_USER=$DOCKERHUB_USER
             export DOCKERHUB_PASS=$DOCKERHUB_PASS
             export FRONTEND_SHELL_PATH=/tmp/nebulae/emi
-            sh deployment/docker/build-docker-hub.sh
+            sh  /tmp/nebulae/emi/deployment/docker/build-docker-hub.sh
   deploy-prod:
       working_directory: /tmp/workspace
       docker:

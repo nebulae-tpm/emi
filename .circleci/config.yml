@@ -1,15 +1,16 @@
+
 version: 2
 jobs:
-  build:    
-    working_directory: /tmp/workspace
+  build-frontend:    
+    working_directory: /tmp
     docker:
       - image: circleci/node:9.9.0
         command: bash
-      - image: docker:17.05.0-ce-git
     steps:
-      - checkout
+      - checkout:
+          path: /tmp/nebulae/emi
       - run:
-          name: Installing NebulaE cli & Compose FrontEnd & push docker-hub
+          name: Installing NebulaE cli & Compose FrontEnd
           command: |
             echo $GCP_SERVICE_ACCOUNT_PROD | base64 --decode --ignore-garbage > /tmp/gcloud-service-key.json
             npm config set prefix '~/.npm-global'
@@ -18,6 +19,29 @@ jobs:
             npm install -g nebulae
             npm install -g @angular/cli
             nebulae compose-ui production --shell-type=FUSE2_ANGULAR --shell-repo=https://github.com/nebulae-tpm/emi.git --frontend-id=$CIRCLE_PROJECT_REPONAME --output-dir=/tmp/nebulae/emi/ --store-type=GCP_DATASTORE --gcp-service-account-token=/tmp/gcloud-service-key.json      
+            ls /tmp 
+            ls /tmp/nebulae
+      # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is 
+          # taken to be the root directory of the workspace.
+          root: workspace
+          # Must be relative path from root
+          paths:
+            - nebulae          
+  build-docker:    
+    working_directory: /tmp
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: nebulae
+      - run:
+          name:  push docker-hub
+          command: |      
+            ls /tmp 
+            ls /tmp/nebulae 
             export DOCKERHUB_NAMESPACE=$DOCKERHUB_NAMESPACE
             export DOCKERHUB_USER=$DOCKERHUB_USER
             export DOCKERHUB_PASS=$DOCKERHUB_PASS
@@ -45,9 +69,13 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build:
+      - build_frontend:
           context: TPM
+      - deploy_docker:
+          context: TPM
+          requires:
+            - build_frontend
       - deploy_prod:
           context: TPM
           requires:
-            - build
+            - deploy_docker

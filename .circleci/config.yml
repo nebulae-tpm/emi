@@ -47,7 +47,7 @@ jobs:
             export DOCKERHUB_PASS=$DOCKERHUB_PASS
             export FRONTEND_SHELL_PATH=/tmp/nebulae/emi
             sh deployment/docker/build-docker-hub.sh
-  deploy_prod:
+  deploy-prod:
       working_directory: /tmp/workspace
       docker:
         - image: google/cloud-sdk:latest
@@ -69,13 +69,13 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build_frontend:
+      - build-frontend:
           context: TPM
-      - deploy_docker:
-          context: TPM
-          requires:
-            - build_frontend
-      - deploy_prod:
+      - deploy-docker:
           context: TPM
           requires:
-            - deploy_docker
+            - build-frontend
+      - deploy-prod:
+          context: TPM
+          requires:
+            - deploy-docker

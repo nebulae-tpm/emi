@@ -33,6 +33,7 @@ jobs:
     steps:
       - checkout:
           path: /tmp/repo
+      - setup_remote_docker
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: /tmp

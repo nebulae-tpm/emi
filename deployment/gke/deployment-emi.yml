@@ -27,6 +27,6 @@ spec:
     spec:
       containers:
       - name: frontend-emi
-        image: nebulaetpm/emi:0.0.1
+        image: nebulaetpm/emi:latest
         ports:
         - containerPort: 80

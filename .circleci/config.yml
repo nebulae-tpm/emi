@@ -35,7 +35,7 @@ jobs:
           path: /tmp/repo
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
-          at: dist
+          at: /tmp
       - run:
           name:  push docker-hub
           command: |      
@@ -44,7 +44,8 @@ jobs:
             export DOCKERHUB_USER=$DOCKERHUB_USER
             export DOCKERHUB_PASS=$DOCKERHUB_PASS
             export FRONTEND_SHELL_PATH=/tmp/
-            sh  /tmp/repo/deployment/docker/build-docker-hub.sh
+            cd /tmp/repo
+            sh /tmp/repo/deployment/docker/build-docker-hub.sh
   deploy-prod:
       working_directory: /tmp/workspace
       docker:

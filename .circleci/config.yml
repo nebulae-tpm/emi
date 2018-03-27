@@ -69,11 +69,11 @@ workflows:
     jobs:
       - build-frontend:
           context: TPM
-      - deploy-docker:
+      - build-docker:
           context: TPM
           requires:
             - build-frontend
       - deploy-prod:
           context: TPM
           requires:
-            - deploy-docker
+            - build-docker

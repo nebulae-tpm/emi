@@ -22,10 +22,10 @@ jobs:
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is 
           # taken to be the root directory of the workspace.
-          root: /tmp
+          root: /tmp/nebulae/emi
           # Must be relative path from root
           paths:
-            - nebulae/emi/dist    
+            - dist    
   build-docker:
     working_directory: /tmp
     docker:
@@ -43,7 +43,7 @@ jobs:
             export DOCKERHUB_NAMESPACE=$DOCKERHUB_NAMESPACE
             export DOCKERHUB_USER=$DOCKERHUB_USER
             export DOCKERHUB_PASS=$DOCKERHUB_PASS
-            export FRONTEND_SHELL_PATH=/tmp/dist
+            export FRONTEND_SHELL_PATH=/tmp/
             sh  /tmp/repo/deployment/docker/build-docker-hub.sh
   deploy-prod:
       working_directory: /tmp/workspace

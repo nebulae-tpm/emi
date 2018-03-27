@@ -33,7 +33,7 @@ jobs:
       - image: docker:17.05.0-ce-git
     steps:
       - checkout:
-        path: /tmp/nebulae/emi
+          path: /tmp/nebulae/emi
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: nebulae

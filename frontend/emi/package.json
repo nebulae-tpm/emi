@@ -40,6 +40,7 @@
     "@swimlane/ngx-charts": "7.0.1",
     "@swimlane/ngx-datatable": "11.1.7",
     "@swimlane/ngx-dnd": "3.1.0",
+    "@types/googlemaps": "3.30.8",
     "@types/prismjs": "1.9.0",
     "angular-calendar": "0.23.3",
     "angular-in-memory-web-api": "0.5.3",

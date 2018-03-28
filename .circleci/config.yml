@@ -64,7 +64,7 @@ jobs:
         - run:
             name: Deploy on Kubernetes
             command: |
-              kubectl apply -f /tmp/workspace/deployment/gke/
+              kubectl apply -f /tmp/workspace/deployment/gke/              
 workflows:
   version: 2
   build-and-deploy:

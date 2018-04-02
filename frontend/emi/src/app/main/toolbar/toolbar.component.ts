@@ -4,6 +4,9 @@ import { FuseConfigService } from '../../core/services/config.service';
 import { TranslateService } from '@ngx-translate/core';
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
+import { locale as english } from '../i18n/en';
+import { locale as spanish } from '../i18n/es';
+import { FuseTranslationLoaderService } from '../../core/services/translation-loader.service';
 
 @Component({
   selector: 'fuse-toolbar',
@@ -22,8 +25,10 @@ export class FuseToolbarComponent {
     private router: Router,
     private fuseConfig: FuseConfigService,
     private translate: TranslateService,
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService,
+    private translationLoader: FuseTranslationLoaderService
   ) {
+    this.translationLoader.loadTranslations(english, spanish);
     this.userStatusOptions = [
       {
         title: 'Online',
@@ -54,14 +59,14 @@ export class FuseToolbarComponent {
 
     this.languages = [
       {
-        id: 'en',
-        title: 'English',
-        flag: 'us'
-      },
-      {
         id: 'es',
         title: 'Español',
         flag: 'es'
+      }
+      , {
+        id: 'en',
+        title: 'English',
+        flag: 'us'
       }
     ];
 
@@ -79,6 +84,7 @@ export class FuseToolbarComponent {
     this.fuseConfig.onSettingsChanged.subscribe(settings => {
       this.horizontalNav = settings.layout.navigation === 'top';
     });
+    this.translate.use(this.selectedLanguage.id);
   }
 
   async ngOnInit() {

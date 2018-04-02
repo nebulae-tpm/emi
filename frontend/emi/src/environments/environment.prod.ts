@@ -2,7 +2,7 @@ export const environment = {
     "production": true,
     "hmr"       : false,
     "keycloak": {
-        "url": "http://tpm.nebulae.com.co/auth",
+        "url": "https://tpm.nebulae.com.co/auth",
         "realm": "TPM",
         "clientId": "EMI",
         "onLoad": "login-required",

@@ -1,4 +1,4 @@
-<div class="group-title">
+<div class="group-title" *ngIf="isGroupVisible(item)">
     <span class="hint-text" [translate]="item.translate">{{ item.title }}</span>
 </div>
 

@@ -2,6 +2,7 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { FuseNavigationService } from '../../navigation.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { fuseAnimations } from '../../../../animations';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
     selector   : 'fuse-nav-vertical-collapse',
@@ -17,7 +18,8 @@ export class FuseNavVerticalCollapseComponent implements OnInit
 
     constructor(
         private navigationService: FuseNavigationService,
-        private router: Router
+        private router: Router,
+        private keycloak: KeycloakService
     )
     {
         // Listen for route changes
@@ -188,6 +190,26 @@ export class FuseNavVerticalCollapseComponent implements OnInit
         }
 
         return false;
+    }
+
+    isCollapseVisible(item): boolean {
+      return (
+        item.children.filter(
+          children =>
+            this.isItemVisible(children) &&
+            (!children.children ? true : this.isCollapseVisible(children))
+        ).length > 0
+      );
+    }
+
+    isItemVisible(item): boolean {
+      if (item.roles) {
+        return (
+          item.roles.filter(rol => this.keycloak.getUserRoles().indexOf(rol) > -1)
+            .length > 0
+        );
+      }
+      return true;
     }
 
 }

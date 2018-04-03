@@ -14,7 +14,7 @@ import { FuseTranslationLoaderService } from '../../core/services/translation-lo
   styleUrls: ['./toolbar.component.scss']
 })
 export class FuseToolbarComponent {
-  userDetails: KeycloakProfile;
+  userDetails: KeycloakProfile = {};
   userStatusOptions: any[];
   languages: any;
   selectedLanguage: any;

@@ -1,6 +1,6 @@
 export const environment = {
     "production": false,
-    "hmr"       : false,
+    "hmr": false,
     "keycloak": {
         "url": "http://127.0.0.1:8080/auth",
         "realm": "DEV_TPM",
@@ -10,5 +10,12 @@ export const environment = {
         "bearerExcludedUrls": [
             "/assets"
         ]
+    },
+    "api": {
+        "gateway": {
+            "graphql": {
+                "uri": "http://localhost:3000/api/gateway/graphql/",
+            }
+        }
     }
 };

@@ -1,6 +1,6 @@
 export const environment = {
     "production": true,
-    "hmr"       : false,
+    "hmr": false,
     "keycloak": {
         "url": "https://tpm.nebulae.com.co/auth",
         "realm": "TPM",
@@ -10,5 +10,12 @@ export const environment = {
         "bearerExcludedUrls": [
             "/assets"
         ]
+    },
+    "api": {
+        "gateway": {
+            "graphql": {
+                "uri": "https://tpm.nebulae.com.co/api/gateway/graphql/",
+            }
+        }
     }
 };

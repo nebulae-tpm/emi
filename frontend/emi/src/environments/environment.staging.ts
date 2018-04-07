@@ -15,6 +15,7 @@ export const environment = {
         "gateway": {
             "graphql": {
                 "uri": "https://qa-tpm.nebulae.com.co/api/gateway/graphql/",
+                "ws": "wss://qa-tpm.nebulae.com.co/api/gateway/graphql/wss",
             }
         }
     }

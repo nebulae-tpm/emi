@@ -18,6 +18,7 @@ export function keycloakInitializer(keycloak: KeycloakService): () => Promise<an
                     },
                     bearerExcludedUrls: environment.keycloak.bearerExcludedUrls
                 });
+                keycloak.getToken().then(token => console.log(token));
                 resolve();
             } catch (error) { 
                 console.log(error);

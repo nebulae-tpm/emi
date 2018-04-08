@@ -14,8 +14,9 @@ export const environment = {
     "api": {
         "gateway": {
             "graphql": {
-                "uri": "http://localhost:3000/api/gateway/graphql/",
-                "ws": "ws://localhost:3000/api/gateway/graphql/wss",
+                "httpEndPoint": "http://localhost:3000/api/gateway/graphql/http",
+                "wsEndPoint": "ws://localhost:3000/api/gateway/graphql/ws",
+                "graphiqlEndPoint": "http://localhost:3000/api/gateway/graphiql",
             }
         }
     }

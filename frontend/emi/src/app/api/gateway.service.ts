@@ -22,7 +22,7 @@ export class GatewayService {
   ) {
 
     //HTTP end-point
-    const http = httpLink.create({ uri: environment.api.gateway.graphql.uri });
+    const http = httpLink.create({ uri: environment.api.gateway.graphql.httpEndPoint});
 
     //Add the JWT token in every request
     const auth = setContext((_, { headers }) => {
@@ -42,7 +42,7 @@ export class GatewayService {
 
     // Create a WebSocket link:
     const ws = new WebSocketLink({
-      uri: environment.api.gateway.graphql.ws,
+      uri: environment.api.gateway.graphql.wsEndPoint,
       options: {
         reconnect: true,
         connectionParams: {

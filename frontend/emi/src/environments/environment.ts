@@ -16,7 +16,7 @@ export const environment = {
             "graphql": {
                 "httpEndPoint": "https://dev-tpm.nebulae.com.co/api/gateway/graphql/http",
                 "wsEndPoint": "wss://dev-tpm.nebulae.com.co/api/gateway/graphql/ws",
-                "graphiqlEndPoint": "https://dev-tpm.nebulae.com.co/api/gateway/graphiql",
+                "graphiqlEndPoint": "https://dev-tpm.nebulae.com.co/api/gateway/graphiql"
             }
         }
     }

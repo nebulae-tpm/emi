@@ -47,14 +47,7 @@ const appRoutes: Routes = [];
       multi: true,
       deps: [KeycloakService]
     },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: apolloInitializer,
-      deps: [
-        Apollo,
-        HttpLink,
-      ], multi: true
-    },
+    GatewayService,
   ],
   bootstrap: [AppComponent]
 })

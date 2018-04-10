@@ -26,22 +26,9 @@ export class GatewayService {
     this.keycloakService.getToken().then(token => {
 
       //Add the JWT token in every request
-      const auth = setContext((_, { headers }) => {
-        // get the authentication token from keycloak
-        const token = this.keycloakService.getToken;
-        // return the headers to the context so httpLink can read them
-        // in this example we assume headers property exists
-        // and it is an instance of HttpHeaders
-        if (!token) {
-          return {};
-        } else {
-          return {
-            headers: headers.append('Authorization', `Bearer ${token}`)
-          };
-        }
-      });
-
-
+      const auth = setContext((request, previousContext) => ({
+        authorization: token
+      }));    
 
       // Create a WebSocket link:
       const ws = new WebSocketLink({

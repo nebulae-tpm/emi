@@ -8,7 +8,7 @@ import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { WebSocketLink } from 'apollo-link-ws';
 import { split } from 'apollo-link';
-const ApolloClient = require('apollo-client').default;
+import { getMainDefinition } from 'apollo-utilities';
 
 @Injectable()
 export class GatewayService {
@@ -48,7 +48,7 @@ export class GatewayService {
       const link = split(
         // split based on operation type
         ({ query }) => {
-          const definition = ApolloClient.getMainDefinition(query);
+          const definition = getMainDefinition(query);
           return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
         },
         ws,

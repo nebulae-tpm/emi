@@ -70,6 +70,7 @@ export class FuseToolbarComponent {
       }
     ];
 
+    const userLang = navigator.language;
     this.selectedLanguage = this.languages[0];
 
     router.events.subscribe(event => {
@@ -89,6 +90,11 @@ export class FuseToolbarComponent {
 
   async ngOnInit() {
     this.userDetails = await this.keycloakService.loadUserProfile();
+    const keycloakLanguage = this.languages
+      .filter(lang => (lang.id === (this.userDetails as any).attributes.locale[0]))[0];
+    this.selectedLanguage = keycloakLanguage ? keycloakLanguage : this.selectedLanguage;
+    this.translate.use(this.selectedLanguage.id);
+
   }
 
   logout() {

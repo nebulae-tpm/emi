@@ -16,7 +16,7 @@ import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
 import { AppAuthGuard } from './auth/appAuthGuard.service';
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { CustomMatPaginatorIntl } from './core/components/custom-mat-paginator-intl/custom-mat-paginator-intl';
+import { CustomMatPaginatorIntl } from './core/custom-mat-paginator-intl/custom-mat-paginator-intl';
 import { GatewayService } from './api/gateway.service';
 import { MatPaginatorIntl } from '@angular/material';
 

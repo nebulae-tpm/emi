@@ -24,4 +24,8 @@ export class FuseTranslationLoaderService
             this.translate.setTranslation(locale.lang, locale.data, true);
         });
     }
+
+    public getTranslate() {
+      return this.translate;
+    }
 }

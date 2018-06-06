@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { locale as english } from '../../../main/i18n/en';
 import { locale as spanish } from '../../../main/i18n/es';
 import { FuseTranslationLoaderService } from '../../services/translation-loader.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'fuse-shortcuts',
@@ -41,7 +42,8 @@ export class FuseShortcutsComponent implements OnInit, OnDestroy {
     private fuseNavigationService: FuseNavigationService,
     private fuseConfig: FuseConfigService,
     private cookieService: CookieService,
-    private translationLoader: FuseTranslationLoaderService
+    private translationLoader: FuseTranslationLoaderService,
+    private translate: TranslateService
   ) {
     this.translationLoader.loadTranslations(english, spanish);
     this.filteredNavigationItems = this.navigationItems = this.fuseNavigationService.getFlatNavigation();
@@ -92,7 +94,7 @@ export class FuseShortcutsComponent implements OnInit, OnDestroy {
 
     this.filteredNavigationItems = this.navigationItems.filter(
       navigationItem => {
-        return navigationItem.title.toLowerCase().includes(value);
+        return this.translate.instant('FAVS.' + navigationItem.title).toLowerCase().includes(value);
       }
     );
   }

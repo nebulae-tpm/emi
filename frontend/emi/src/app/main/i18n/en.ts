@@ -12,6 +12,12 @@ export const locale = {
     ITEMS_PER_PAGE: 'Item per page',
     NEXT_PAGE: 'Next page',
     PREVIOUS_PAGE: 'Previous page',
-    OF_LABEL: 'of'
+    OF_LABEL: 'of',
+    FAVS: {
+      'dashboard-devices': 'Dashboard',
+      'devices-location': 'Location',
+      'devices': 'Devices',
+      'profile': 'Profile'
+    }
   }
 };

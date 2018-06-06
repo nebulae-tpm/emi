@@ -19,15 +19,12 @@ export class GatewayService {
     private keycloakService: KeycloakService
   ) {
 
-    //HTTP end-point
+    // HTTP end-point
     const http = httpLink.create({ uri: environment.api.gateway.graphql.httpEndPoint });
 
     //#region keycloakEvents$ subscription
     this.keycloakService.keycloakEvents$.subscribe(
       evt => {
-        console.log('##################################');
-        console.log(evt.type);
-        console.log('##################################');
         switch (evt.type) {
           case KeycloakEventType.OnTokenExpired: {
             this.keycloakService.logout()
@@ -42,7 +39,7 @@ export class GatewayService {
 
     this.keycloakService.getToken().then(token => {
 
-      //Add the JWT token in every request
+      // Add the JWT token in every request
       const auth = setContext((request, previousContext) => ({
         authorization: token
       }));
@@ -73,7 +70,7 @@ export class GatewayService {
       );
 
 
-      //Create Apollo client
+      // Create Apollo client
       this.apollo.create({
         link,
         cache: new InMemoryCache()

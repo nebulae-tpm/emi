@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { KeycloakService } from 'keycloak-angular';
+import { KeycloakService, KeycloakEventType } from 'keycloak-angular';
 import { HttpHeaders } from '@angular/common/http';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
@@ -22,13 +22,30 @@ export class GatewayService {
     //HTTP end-point
     const http = httpLink.create({ uri: environment.api.gateway.graphql.httpEndPoint });
 
+    //#region keycloakEvents$
+    this.keycloakService.keycloakEvents$.subscribe(
+      evt => {
+        console.log('##################################');
+        console.log(evt.type);
+        console.log('##################################');
+        switch (evt.type) {
+          case KeycloakEventType.OnTokenExpired: {
+            this.keycloakService.logout()
+              .then(r => console.log('SESIÓN CERRADA', r))
+              .catch(error => console.log('Error', error));
+            break;
+          }
+        }
+      }
+    );
+    //#endregion
 
     this.keycloakService.getToken().then(token => {
 
       //Add the JWT token in every request
       const auth = setContext((request, previousContext) => ({
         authorization: token
-      }));    
+      }));
 
       // Create a WebSocket link:
       const ws = new WebSocketLink({
@@ -63,9 +80,5 @@ export class GatewayService {
       });
 
     });
-
-
-
   }
-
 }

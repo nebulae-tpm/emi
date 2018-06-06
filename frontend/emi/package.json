@@ -59,7 +59,7 @@
     "graphql-tag": "2.8.0",
     "hammerjs": "2.0.8",
     "intl": "1.2.5",
-    "keycloak-angular": "^1.2.4",
+    "keycloak-angular": "^1.4",
     "moment": "2.20.1",
     "ng2-charts": "1.6.0",
     "ngrx-store-freeze": "0.2.1",

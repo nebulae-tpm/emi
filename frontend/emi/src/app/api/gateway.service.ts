@@ -22,7 +22,7 @@ export class GatewayService {
     //HTTP end-point
     const http = httpLink.create({ uri: environment.api.gateway.graphql.httpEndPoint });
 
-    //#region keycloakEvents$
+    //#region keycloakEvents$ subscription
     this.keycloakService.keycloakEvents$.subscribe(
       evt => {
         console.log('##################################');

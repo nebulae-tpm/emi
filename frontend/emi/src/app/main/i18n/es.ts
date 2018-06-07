@@ -17,7 +17,8 @@ export const locale = {
       'dashboard-devices': 'Tablero',
       'devices-location': 'Ubicación',
       'devices': 'Dispositivos',
-      'profile': 'Perfil'
+      'profile': 'Perfil',
+      'cronjob': 'Tareas programadas'
     }
   }
 };

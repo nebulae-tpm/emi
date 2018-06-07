@@ -17,7 +17,8 @@ export const locale = {
       'dashboard-devices': 'Dashboard',
       'devices-location': 'Location',
       'devices': 'Devices',
-      'profile': 'Profile'
+      'profile': 'Profile',
+      'cronjob': 'Scheduled tasks'
     }
   }
 };

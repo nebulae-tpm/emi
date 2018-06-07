@@ -1,6 +1,6 @@
 #!/bin/bash
 export DOCKERHUB_IMAGE=emi
-export DOCKERHUB_TAG=0.0.17
+export DOCKERHUB_TAG=0.0.18
 
 rm -rf deployment/docker/dist/
 cp -R $FRONTEND_SHELL_PATH/dist deployment/docker/dist

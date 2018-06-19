@@ -7,6 +7,8 @@ jobs:
       - image: circleci/node:9.9.0
         command: bash
     steps:
+      - checkout:
+          path: /tmp/repo
       - run:
           name: Installing NebulaE cli & Compose FrontEnd
           command: |
@@ -16,7 +18,10 @@ jobs:
             source ~/.profile
             npm install -g @nebulae/cli
             npm install -g @angular/cli
-            nebulae compose-ui production --shell-type=FUSE2_ANGULAR --shell-repo=https://github.com/nebulae-tpm/emi.git --frontend-id=$CIRCLE_PROJECT_REPONAME --output-dir=/tmp/nebulae/emi/ --store-type=GCP_DATASTORE --gcp-service-account-token=/tmp/gcloud-service-key.json      
+            nebulae compose-ui production --shell-type=FUSE2_ANGULAR --shell-repo=https://github.com/nebulae-tpm/emi.git --frontend-id=$CIRCLE_PROJECT_REPONAME --output-dir=/tmp/nebulae/emi/ --store-type=GCP_DATASTORE --gcp-service-account-token=/tmp/gcloud-service-key.json            
+            cd /tmp/nebulae/emi/
+            source /tmp/repo/.circleci/scripts/gitScripts.sh
+            gitPackageLockChanged && gitCommitPush_package-lock
             ls /tmp/nebulae/emi/dist
       # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
       - persist_to_workspace:

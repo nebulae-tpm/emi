@@ -8,6 +8,3 @@
 # IDE Files
 .history/
 .vscode
-
-# Has several problems when building on CircleCi
-package-lock.json

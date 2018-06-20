@@ -13,6 +13,8 @@ gitChanged(){
 }
 
 gitPackageLockChanged(){    
+    echo "gitPackageLockChanged"
+    pwd
     changed=$( git status -s | grep package-lock.json | wc -l )
     if [ $? -ne 0 ];
         then
@@ -28,7 +30,9 @@ gitPackageLockChanged(){
     fi
 }
 
-gitCommitPush_package-lock(){    
+gitCommitPush_package-lock(){ 
+    echo "gitCommitPush_package" 
+    pwd  
     git add frontend/emi/package-lock.json
     git commit -m 'CircleCI has updated locked npm versions [ci skip]' frontend/emi/package-lock.json 
     git push    

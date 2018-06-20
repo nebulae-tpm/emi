@@ -20,8 +20,9 @@ jobs:
             npm install -g @angular/cli
             nebulae compose-ui production --shell-type=FUSE2_ANGULAR --shell-repo=https://github.com/nebulae-tpm/emi.git --frontend-id=$CIRCLE_PROJECT_REPONAME --output-dir=/tmp/nebulae/emi/ --store-type=GCP_DATASTORE --gcp-service-account-token=/tmp/gcloud-service-key.json                        
             source /tmp/repo/.circleci/scripts/gitScripts.sh
-            cd /tmp/nebulae/emi/
-            ls -a
+            cp /tmp/nebulae/emi/package-lock.json /tmp/repo/frontend/emi/package-lock.json
+            cd /tmp/repo/frontend/emi/
+            git status -s
             gitPackageLockChanged && gitCommitPush_package-lock
             ls /tmp/nebulae/emi/dist
       # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 

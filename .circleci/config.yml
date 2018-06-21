@@ -21,10 +21,11 @@ jobs:
             nebulae compose-ui production --shell-type=FUSE2_ANGULAR --shell-repo=https://github.com/nebulae-tpm/emi.git --frontend-id=$CIRCLE_PROJECT_REPONAME --output-dir=/tmp/nebulae/emi/ --store-type=GCP_DATASTORE --gcp-service-account-token=/tmp/gcloud-service-key.json                        
             source /tmp/repo/.circleci/scripts/gitScripts.sh
             # commit & push package-lock.json changes after ng build
+            GITHUB_PERSONAL_ACCESS_TOKEN
             cp /tmp/nebulae/emi/package-lock.json /tmp/repo/frontend/emi/package-lock.json
             cd /tmp/repo/
             git status -s
-            gitPackageLockChanged && gitCommitPush_package-lock
+            gitPackageLockChanged && gitCommitPush_package-lock($GITHUB_USER_EMAIL, $GITHUB_USER_NAME, $GITHUB_PERSONAL_ACCESS_TOKEN, "nebulae-tpm/emi", "master")
             ls /tmp/nebulae/emi/dist
       # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
       - persist_to_workspace:

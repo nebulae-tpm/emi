@@ -30,10 +30,23 @@ gitPackageLockChanged(){
     fi
 }
 
+# Commit and push the package-lock.json
+# Arguments:
+#   github user email
+#   github user name
+#   github user token
+#   github repo path eg: nebulae-tpm/emi
+#   github repo branch eg: master
 gitCommitPush_package-lock(){ 
     echo "gitCommitPush_package" 
     pwd  
+    
+    git config credential.helper 'cache --timeout=120'
+    git config user.email $1
+    git config user.name $2   
+
+    # Push quietly to prevent showing the token in log
     git add frontend/emi/package-lock.json
     git commit -m 'CircleCI has updated locked npm versions [ci skip]' frontend/emi/package-lock.json 
-    git push    
+    git push -q https://$3@github.com/$4.git $5
 }

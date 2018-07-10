@@ -14,13 +14,12 @@ export function keycloakInitializer(keycloak: KeycloakService): () => Promise<an
                     },
                     initOptions: {
                         onLoad: environment.keycloak.onLoad as KeycloakOnLoad,
-                        checkLoginIframe: environment.keycloak.checkLoginIframe                        
+                        checkLoginIframe: environment.keycloak.checkLoginIframe
                     },
                     bearerExcludedUrls: environment.keycloak.bearerExcludedUrls
                 });
-                keycloak.getToken().then(token => console.log(token));
                 resolve();
-            } catch (error) { 
+            } catch (error) {
                 console.log(error);
             }
         });

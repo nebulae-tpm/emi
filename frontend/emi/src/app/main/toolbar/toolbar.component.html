@@ -47,6 +47,12 @@
           <span>{{'TOOLBAR.LOGOUT' | translate}}</span>
         </button>
 
+        <button *ngIf="userRoles.includes('developer')"
+          mat-menu-item class="" (click)="copyJwt()">
+          <mat-icon>content_copy</mat-icon>
+          <span>{{'TOOLBAR.COPY_TO_CLIPBOARD' | translate}}</span>
+        </button>
+
       </mat-menu>
 
       <div class="toolbar-separator"></div>

@@ -20,6 +20,7 @@ export class FuseToolbarComponent {
   selectedLanguage: any;
   showLoadingBar: boolean;
   horizontalNav: boolean;
+  userRoles: string[] = [];
 
   constructor(
     private router: Router,
@@ -94,7 +95,7 @@ export class FuseToolbarComponent {
       .filter(lang => (lang.id === (this.userDetails as any).attributes.locale[0]))[0];
     this.selectedLanguage = keycloakLanguage ? keycloakLanguage : this.selectedLanguage;
     this.translate.use(this.selectedLanguage.id);
-
+    this.userRoles = this.keycloakService.getUserRoles(true);
   }
 
   logout() {
@@ -111,5 +112,19 @@ export class FuseToolbarComponent {
 
     // Use the selected language for translations
     this.translate.use(lang.id);
+  }
+
+  async copyJwt(){
+    const element = document.createElement('textarea');
+    element.id = 'jwtBody';
+    element.style.position = 'fixed';
+    element.style.top = '0';
+    element.style.left = '0';
+    element.style.opacity = '0';
+    element.value = await this.keycloakService.getToken();
+    document.body.appendChild(element);
+    element.select();
+    document.execCommand('copy');
+    document.body.removeChild(document.getElementById('jwtBody'));
   }
 }

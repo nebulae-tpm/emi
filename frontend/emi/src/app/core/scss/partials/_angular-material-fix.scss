@@ -7,7 +7,7 @@
 }
 
 // Fix: "Inconsistent font sizes across elements"
-.mat-input-wrapper {
+.mat-form-field-wrapper {
     font-size: 16px;
 }
 
@@ -34,7 +34,7 @@
 
     &.mat-form-field-type-mat-select {
 
-        .mat-input-infix {
+        .mat-form-field-infix {
             display: inline-flex;
             width: auto;
 

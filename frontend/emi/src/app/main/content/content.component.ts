@@ -66,5 +66,3 @@ export class FuseContentComponent implements OnInit, OnDestroy {
         this.onSettingsChanged.unsubscribe();
     }
 }
-
-

@@ -38,3 +38,4 @@ export class AppComponent
         this.translationLoader.loadTranslations(navigationEnglish, navigationSpanish);
     }
 }
+

@@ -24,7 +24,7 @@ jobs:
             cp /tmp/nebulae/emi/package-lock.json /tmp/repo/frontend/emi/package-lock.json
             cd /tmp/repo/
             git status -s
-            gitPackageLockChanged && gitCommitPush_package-lock "$GITHUB_USER_EMAIL" "$GITHUB_USER_NAME" "$GITHUB_PERSONAL_ACCESS_TOKEN" "nebulae-tpm/emi" "master" 
+            # gitPackageLockChanged && gitCommitPush_package-lock "$GITHUB_USER_EMAIL" "$GITHUB_USER_NAME" "$GITHUB_PERSONAL_ACCESS_TOKEN" "nebulae-tpm/emi" "master" 
             ls /tmp/nebulae/emi/dist
       # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
       - persist_to_workspace:

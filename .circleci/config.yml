@@ -16,8 +16,8 @@ jobs:
             npm config set prefix '~/.npm-global'
             export PATH=~/.npm-global/bin:$PATH
             source ~/.profile
-            npm install -g @nebulae/cli
-            npm install -g @angular/cli
+            npm install -g @nebulae/cli@6.1.0
+            npm install -g @angular/cli@6.1.0
             nebulae compose-ui production --shell-type=FUSE2_ANGULAR --shell-repo=https://github.com/nebulae-tpm/emi.git --frontend-id=$CIRCLE_PROJECT_REPONAME --output-dir=/tmp/nebulae/emi/ --store-type=GCP_DATASTORE --gcp-service-account-token=/tmp/gcloud-service-key.json                        
             source /tmp/repo/.circleci/scripts/gitScripts.sh
             # commit & push package-lock.json changes after ng build

@@ -59,10 +59,11 @@ export class FuseContentComponent implements OnInit, OnDestroy {
                 );
     }
 
-    ngOnInit() {        
+    ngOnInit() {
     }
 
     ngOnDestroy() {
         this.onSettingsChanged.unsubscribe();
     }
 }
+

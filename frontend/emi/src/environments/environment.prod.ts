@@ -4,7 +4,7 @@ export const environment = {
     "keycloak": {
         "url": "https://iot.nebulae.com.co/auth",
         "realm": "TPM",
-        "clientId": "EMI",
+        "clientId": "EMI-FIREBASE",
         "onLoad": "login-required",
         "checkLoginIframe": false,
         "bearerExcludedUrls": [

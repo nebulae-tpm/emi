@@ -58,3 +58,5 @@ export class FuseMainComponent implements OnInit, OnDestroy
         this._renderer.removeClass(this._elementRef.nativeElement, className);
     }
 }
+
+

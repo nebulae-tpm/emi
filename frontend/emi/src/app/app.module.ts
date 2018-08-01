@@ -38,7 +38,7 @@ const appRoutes: Routes = [];
     KeycloakAngularModule,
     ApolloModule,
     HttpLinkModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('/emi/ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     {

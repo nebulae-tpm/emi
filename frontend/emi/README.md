@@ -1,4 +1,4 @@
-# Fuse2
+# EMI
 
 Material Design Admin Template with Angular 5+ and Angular Material 2
 

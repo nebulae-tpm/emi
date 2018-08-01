@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fuse2": {
+    "emi": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -84,27 +84,27 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "fuse2:build"
+            "browserTarget": "emi:build"
           },
           "configurations": {
             "local": {
-              "browserTarget": "fuse2:build:local"
+              "browserTarget": "emi:build:local"
             },
             "hmr": {
-              "browserTarget": "fuse2:build:hmr"
+              "browserTarget": "emi:build:hmr"
             },
             "staging": {
-              "browserTarget": "fuse2:build:staging"
+              "browserTarget": "emi:build:staging"
             },
             "production": {
-              "browserTarget": "fuse2:build:production"
+              "browserTarget": "emi:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fuse2:build"
+            "browserTarget": "emi:build"
           }
         },
         "test": {
@@ -141,7 +141,7 @@
         }
       }
     },
-    "fuse2-e2e": {
+    "emi-e2e": {
       "root": "",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -150,7 +150,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "fuse2:serve"
+            "devServerTarget": "emi:serve"
           }
         },
         "lint": {
@@ -169,7 +169,7 @@
       }
     }
   },
-  "defaultProject": "fuse2",
+  "defaultProject": "emi",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

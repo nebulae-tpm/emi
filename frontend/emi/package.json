@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
-    "start-dev-env": "gulp dev-sync-source --silent & ng serve --env local",
+    "start-dev-env": "gulp dev-sync-source --silent & ng serve --configuration local",
     "start-hmr": "ng serve --hmr -e=hmr -sm=false",
     "start-hmr-sourcemaps": "ng serve --hmr -e=hmr",
     "build": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --dev",

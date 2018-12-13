@@ -67,16 +67,16 @@ fuse-widget {
 
         &.mat-form-field-type-mat-select {
 
-            .mat-form-field-wrapper {
+            .mat-input-wrapper {
                 padding: 16px 0;
 
-                .mat-form-field-infix {
+                .mat-input-infix {
                     border: none;
                     padding: 0;
                 }
             }
 
-            .mat-form-field-underline {
+            .mat-input-underline {
                 display: none;
             }
         }

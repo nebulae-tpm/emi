@@ -12,12 +12,12 @@ export const environment = {
         ]
     },
     "api": {
-        "gateway": {
-            "graphql": {
-                "httpEndPoint": "http://localhost:3000/api/gateway/graphql/http",
-                "wsEndPoint": "ws://localhost:3000/api/gateway/graphql/ws",
-                "graphiqlEndPoint": "http://localhost:3000/api/gateway/graphiql"
-            }
-        }
+      "gateway": {
+          "graphql": {
+            "httpEndPoint": "http://localhost:3000/api/emi-gateway/graphql/http",
+            "wsEndPoint": "ws://localhost:3000/api/emi-gateway/graphql/ws",
+            "graphiqlEndPoint": "http://localhost:3000/api/emi-gateway/graphiql"
+          }
+      }
     }
 };

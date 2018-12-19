@@ -60,7 +60,7 @@
 
       <div class="toolbar-separator"></div>
 
-      <button mat-button fxHide fxShow.gt-xs class="language-button" [matMenuTriggerFor]="languageMenu" >
+      <button *ngIf="selectedLanguage" mat-button fxHide fxShow.gt-xs class="language-button" [matMenuTriggerFor]="languageMenu">
         <div fxLayout="row" fxLayoutAlign="center center">
           <img class="flag mr-8" [src]="'./assets/images/flags/' + selectedLanguage.flag + '.png'" />
           <span class="iso text-uppercase">{{ selectedLanguage.id }}</span>

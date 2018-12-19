@@ -14,9 +14,9 @@ export const environment = {
     "api": {
         "gateway": {
             "graphql": {
-                "httpEndPoint": "https://qa-iot.nebulae.com.co/api/gateway/graphql/http",
-                "wsEndPoint": "wss://qa-iot.nebulae.com.co/api/gateway/graphql/ws",
-                "graphiqlEndPoint": "https://qa-iot.nebulae.com.co/api/gateway/graphiql"
+                "httpEndPoint": "https://qa-iot.nebulae.com.co/api/emi-gateway/graphql/http",
+                "wsEndPoint": "wss://qa-iot.nebulae.com.co/api/emi-gateway/graphql/ws",
+                "graphiqlEndPoint": "https://qa-iot.nebulae.com.co/api/emi-gateway/graphiql"
             }
         }
     }

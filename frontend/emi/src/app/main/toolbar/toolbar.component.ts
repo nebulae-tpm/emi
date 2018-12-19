@@ -9,6 +9,12 @@ import { locale as spanish } from '../i18n/es';
 import { FuseTranslationLoaderService } from '../../core/services/translation-loader.service';
 import { ToolbarService } from './toolbar.service';
 
+export interface Language{
+  id: string;
+  title: string;
+  flag: string;
+}
+
 @Component({
   selector: 'fuse-toolbar',
   templateUrl: './toolbar.component.html',
@@ -17,8 +23,8 @@ import { ToolbarService } from './toolbar.service';
 export class FuseToolbarComponent {
   userDetails: KeycloakProfile = {};
   userStatusOptions: any[];
-  languages: any;
-  selectedLanguage: any;
+  languages: Language[];
+  selectedLanguage: Language;
   showLoadingBar: boolean;
   horizontalNav: boolean;
   userRoles: string[] = [];
@@ -66,8 +72,8 @@ export class FuseToolbarComponent {
         id: 'es',
         title: 'Español',
         flag: 'es'
-      }
-      , {
+      },
+      {
         id: 'en',
         title: 'English',
         flag: 'us'
@@ -92,12 +98,13 @@ export class FuseToolbarComponent {
     this.translate.use(this.selectedLanguage.id);
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   async ngOnInit() {
     this.userDetails = await this.keycloakService.loadUserProfile();
-    const keycloakLanguage = this.languages
-      .filter(lang => (lang.id === (this.userDetails as any).attributes.locale[0]))[0];
-    this.selectedLanguage = keycloakLanguage ? keycloakLanguage : this.selectedLanguage;
-    this.translate.use(this.selectedLanguage.id);
+    const userLanguage = this.userDetails['attributes']['locale'] || 'es';
+    const language = this.languages.find(lang => lang.id === userLanguage);
+    this.setLanguage(language || this.languages[0]);
+
     this.userRoles = this.keycloakService.getUserRoles(true);
   }
 
@@ -114,6 +121,7 @@ export class FuseToolbarComponent {
   }
 
   setLanguage(lang) {
+    // console.log('lang', lang);
     // Set the selected language for toolbar
     this.selectedLanguage = lang;
 

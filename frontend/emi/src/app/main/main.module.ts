@@ -15,6 +15,7 @@ import { FuseQuickPanelComponent } from './quick-panel/quick-panel.component';
 import { FuseThemeOptionsComponent } from '../core/components/theme-options/theme-options.component';
 import { FuseShortcutsModule } from '../core/components/shortcuts/shortcuts.module';
 import { FuseSearchBarModule } from '../core/components/search-bar/search-bar.module';
+import { ToolbarService } from './toolbar/toolbar.service';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { FuseSearchBarModule } from '../core/components/search-bar/search-bar.mo
     ],
     exports     : [
         FuseMainComponent
-    ]
+    ],
+    providers: [ ToolbarService ]
 })
 
 export class FuseMainModule

@@ -1,82 +1,79 @@
 <mat-toolbar class="p-0 mat-elevation-z1">
-
-  <mat-progress-bar *ngIf="showLoadingBar" class="loading-bar" color="accent" mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar *ngIf="showLoadingBar" class="loading-bar" color="accent" mode="indeterminate">
+  </mat-progress-bar>
 
   <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
-
     <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
-
-      <button mat-button class="toggle-button-navbar mat-icon-button" fuseNavbarVertical="toggleBar" fxHide.gt-md>
+      <button mat-button class="toggle-button-navbar mat-icon-button"
+        fuseNavbarVertical="toggleBar" fxHide.gt-md >
         <mat-icon>menu</mat-icon>
       </button>
-
 
       <div class="toolbar-separator" fxHide.gt-md></div>
 
       <div fxLayout="row" fxLayoutAlign="start center" *ngIf="horizontalNav">
         <div class="logo ml-16">
-          <img class="logo-icon" src="./assets/images/logos/d_hub_logo.png">
+          <img class="logo-icon" src="./assets/images/logos/d_hub_logo.png" />
         </div>
       </div>
 
-      <div class="px-8 px-mat-16">
-        <fuse-shortcuts></fuse-shortcuts>
-      </div>
-
+      <div class="px-8 px-mat-16"><fuse-shortcuts></fuse-shortcuts></div>
     </div>
+
+
 
     <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
 
-      <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
-        <div fxLayout="row" fxLayoutAlign="center center">
-          <img class="avatar" src="./assets/images/avatars/profile.jpg">
-          <span class="username mr-12" fxHide fxShow.gt-sm>{{userDetails.firstName}} {{userDetails.lastName}}</span>
-          <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
+      <div *ngIf="businessSelected" fxLayout="row" fxLayoutAlign="center center" style="padding-right: 5px">
+          <!-- <mat-icon>account_balance</mat-icon> -->
+          <p style="font-size: 12px; padding-left: 5px" fxHide.gt-xs>{{businessSelected.name}}</p>
+          <p style="font-size: 18px; padding-left: 5px" fxHide fxShow.gt-xs>{{businessSelected.name}}</p>
         </div>
-      </button>
 
-      <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+      <fuse-search-bar (onBusinessSelected)="search($event)"></fuse-search-bar>
+      <div class="toolbar-separator"></div>
 
-        <button mat-menu-item routerLink="/profile">
-          <mat-icon>account_circle</mat-icon>
-          <span>{{'TOOLBAR.MY_PROFILE' | translate}}</span>
+      <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <img class="avatar" src="./assets/images/avatars/profile.jpg" />
+            <span class="username mr-12" fxHide fxShow.gt-sm>{{ userDetails.firstName }} {{ userDetails.lastName }}</span>
+            <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
+          </div>
         </button>
 
-        <button mat-menu-item class="" (click)="logout()">
-          <mat-icon>exit_to_app</mat-icon>
-          <span>{{'TOOLBAR.LOGOUT' | translate}}</span>
-        </button>
+        <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>account_circle</mat-icon>
+            <span>{{ "TOOLBAR.MY_PROFILE" | translate }}</span>
+          </button>
 
-        <button *ngIf="userRoles.includes('developer')"
-          mat-menu-item class="" (click)="copyJwt()">
-          <mat-icon>content_copy</mat-icon>
-          <span>{{'TOOLBAR.COPY_TO_CLIPBOARD' | translate}}</span>
-        </button>
+          <button mat-menu-item class="" (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>{{ "TOOLBAR.LOGOUT" | translate }}</span>
+          </button>
 
-      </mat-menu>
+          <button *ngIf="userRoles.includes('developer')" mat-menu-item class="" (click)="copyJwt()" >
+            <mat-icon>content_copy</mat-icon>
+            <span>{{ "TOOLBAR.COPY_TO_CLIPBOARD" | translate }}</span>
+          </button>
+        </mat-menu>
 
       <div class="toolbar-separator"></div>
 
-      <fuse-search-bar (onInput)="search($event)"></fuse-search-bar>
-
-      <div class="toolbar-separator"></div>
-
-      <button mat-button fxHide fxShow.gt-xs class="language-button" [matMenuTriggerFor]="languageMenu">
+      <button mat-button fxHide fxShow.gt-xs class="language-button" [matMenuTriggerFor]="languageMenu" >
         <div fxLayout="row" fxLayoutAlign="center center">
-          <img class="flag mr-8" [src]="'./assets/images/flags/'+selectedLanguage.flag+'.png'">
-          <span class="iso text-uppercase">{{selectedLanguage.id}}</span>
+          <img class="flag mr-8" [src]="'./assets/images/flags/' + selectedLanguage.flag + '.png'" />
+          <span class="iso text-uppercase">{{ selectedLanguage.id }}</span>
         </div>
       </button>
 
       <mat-menu #languageMenu="matMenu" [overlapTrigger]="false">
-
-        <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)">
+        <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)" >
           <div fxLayout="row" fxLayoutAlign="start center">
-            <img class="flag mr-16" [src]="'./assets/images/flags/'+lang.flag+'.png'">
-            <span class="iso">{{lang.title}}</span>
+            <img class="flag mr-16" [src]="'./assets/images/flags/' + lang.flag + '.png'" />
+            <span class="iso">{{ lang.title }}</span>
           </div>
         </button>
-
       </mat-menu>
 
       <div class="toolbar-separator" fxHide fxShow.gt-xs></div>
@@ -86,8 +83,6 @@
                     aria-label="Toggle quick panel">
                 <mat-icon class="icon">format_list_bulleted</mat-icon>
             </button>-->
-
-
     </div>
   </div>
 </mat-toolbar>

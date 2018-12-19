@@ -7,6 +7,7 @@ import { KeycloakProfile } from 'keycloak-js';
 import { locale as english } from '../i18n/en';
 import { locale as spanish } from '../i18n/es';
 import { FuseTranslationLoaderService } from '../../core/services/translation-loader.service';
+import { ToolbarService } from './toolbar.service';
 
 @Component({
   selector: 'fuse-toolbar',
@@ -21,13 +22,15 @@ export class FuseToolbarComponent {
   showLoadingBar: boolean;
   horizontalNav: boolean;
   userRoles: string[] = [];
+  businessSelected: {id: string, name: string} = null;
 
   constructor(
     private router: Router,
     private fuseConfig: FuseConfigService,
     private translate: TranslateService,
     private keycloakService: KeycloakService,
-    private translationLoader: FuseTranslationLoaderService
+    private translationLoader: FuseTranslationLoaderService,
+    private toolbarService: ToolbarService
   ) {
     this.translationLoader.loadTranslations(english, spanish);
     this.userStatusOptions = [
@@ -101,9 +104,13 @@ export class FuseToolbarComponent {
   logout() {
     this.keycloakService.logout();
   }
+
+
   search(value) {
-    // Do your search here...
-    console.log(value);
+    console.log('Business selected ==> ', value);
+    this.businessSelected = value;
+    this.toolbarService.onSelectedBusiness.next(value);
+
   }
 
   setLanguage(lang) {

@@ -61,11 +61,11 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
       )
       .subscribe(r => {}, e => console.log(e), () => {});
 
-    this.businessQueryFiltered$ = fromEvent(this.inputFilter.nativeElement, 'input')
+    this.businessQueryFiltered$ = fromEvent(this.inputFilter.nativeElement, 'keyup')
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
-        mergeMap((filterText: string) => this.getBusinessFiltered$(filterText))
+        mergeMap(() => this.getBusinessFiltered$(this.inputFilter.nativeElement.value))
       );
   }
 

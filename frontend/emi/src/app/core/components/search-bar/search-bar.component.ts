@@ -6,7 +6,7 @@ import { locale as spanish } from '../../../main/i18n/es';
 import { FuseTranslationLoaderService } from '../../services/translation-loader.service';
 import { Observable } from 'rxjs/Observable';
 import { fromEvent, Subject, of, defer, from } from 'rxjs';
-import { debounceTime, distinctUntilChanged, mergeMap, filter, map, takeUntil, tap, mapTo, toArray } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, mergeMap, filter, map, takeUntil, tap, mapTo, toArray, startWith } from 'rxjs/operators';
 import { SearchBarService } from './search-bar.service';
 import { KeycloakService } from 'keycloak-angular';
 
@@ -45,7 +45,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userRoles = this.keycloakService.getUserRoles(true);
 
-    of(this.keycloakService.getUserRoles(true).includes("SYSADMIN"))
+    of(this.keycloakService.getUserRoles(true).includes("PLATFORM-ADMIN"))
       .pipe(
         mergeMap((isSysAdmin: boolean) =>
           isSysAdmin ? of(null) : this.searchBarService.getUserBusiness$()
@@ -63,6 +63,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
 
     this.businessQueryFiltered$ = fromEvent(this.inputFilter.nativeElement, 'keyup')
       .pipe(
+        startWith(''),
         debounceTime(500),
         distinctUntilChanged(),
         mergeMap(() => this.getBusinessFiltered$(this.inputFilter.nativeElement.value))

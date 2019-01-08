@@ -44,7 +44,6 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userRoles = this.keycloakService.getUserRoles(true);
-
     of(this.keycloakService.getUserRoles(true).includes("PLATFORM-ADMIN"))
       .pipe(
         mergeMap((isSysAdmin: boolean) =>

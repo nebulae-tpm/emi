@@ -3,6 +3,6 @@ import { BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class ToolbarService {
-  onSelectedBusiness = new BehaviorSubject<{ id: string; name: string }>(null);
+  onSelectedBusiness$ = new BehaviorSubject<{ id: string; name: string }>(null);
   constructor() {}
 }

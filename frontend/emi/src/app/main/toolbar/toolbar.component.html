@@ -24,13 +24,28 @@
 
     <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
 
+        <div class="toolbar-separator"></div>
+      <fuse-search-bar (onBusinessSelected)="search($event)" [selectedBU]="businessSelected" ></fuse-search-bar>
+
+
       <div *ngIf="businessSelected" fxLayout="row" fxLayoutAlign="center center" style="padding-right: 5px">
           <!-- <mat-icon>account_balance</mat-icon> -->
-          <p style="font-size: 12px; padding-left: 5px" fxHide.gt-xs>{{businessSelected.name}}</p>
-          <p style="font-size: 18px; padding-left: 5px" fxHide fxShow.gt-xs>{{businessSelected.name}}</p>
-        </div>
 
-      <fuse-search-bar (onBusinessSelected)="search($event)"></fuse-search-bar>
+
+          <!-- <mat-form-field *ngIf="businessSelected" class="example-form-field"> -->
+          <div *ngIf="businessSelected" fxLayout="row" fxLayoutAlign="start center">
+            <!-- <input type="text" [(ngModel)]="businessSelected.name" style="width: auto"> -->
+            <p style="font-size: 12px; padding-left: 5px" fxHide.gt-xs>{{businessSelected.name}}</p>
+            <p style="font-size: 18px; padding-left: 5px" fxHide fxShow.gt-xs>{{businessSelected.name}}</p>
+            <button mat-button *ngIf="businessSelected" matSuffix mat-icon-button aria-label="Clear" (click)="search(null)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+
+          <!-- </mat-form-field> -->
+
+
+        </div>
       <div class="toolbar-separator"></div>
 
       <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">

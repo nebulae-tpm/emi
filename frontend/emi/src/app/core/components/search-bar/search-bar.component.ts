@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ElementRef, ViewChild, OnDestroy, Input } from '@angular/core';
 import { FuseConfigService } from '../../services/config.service';
 import { Subscription } from 'rxjs/Subscription';
 import { locale as english } from '../../../main/i18n/en';
@@ -6,26 +6,29 @@ import { locale as spanish } from '../../../main/i18n/es';
 import { FuseTranslationLoaderService } from '../../services/translation-loader.service';
 import { Observable } from 'rxjs/Observable';
 import { fromEvent, Subject, of, defer, from } from 'rxjs';
-import { debounceTime, distinctUntilChanged, mergeMap, filter, map, takeUntil, tap, mapTo, toArray, startWith } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, mergeMap, filter, map, takeUntil, tap, mapTo, toArray, startWith, delay } from 'rxjs/operators';
 import { SearchBarService } from './search-bar.service';
 import { KeycloakService } from 'keycloak-angular';
 
 @Component({
-  selector: "fuse-search-bar",
-  templateUrl: "./search-bar.component.html",
-  styleUrls: ["./search-bar.component.scss"]
+  selector: 'fuse-search-bar',
+  templateUrl: './search-bar.component.html',
+  styleUrls: ['./search-bar.component.scss']
 })
 export class FuseSearchBarComponent implements OnInit, OnDestroy {
   collapsed: boolean;
   toolbarColor: string;
   @Output() onBusinessSelected: EventEmitter<any> = new EventEmitter();
+  @Input() selectedBU: any;
   onSettingsChanged: Subscription;
 
   businessQueryFiltered$: Observable<any>;
-  @ViewChild("inputFilter") inputFilter: ElementRef;
+  @ViewChild('inputFilter') inputFilter: ElementRef;
   private ngUnsubscribe = new Subject();
   userRoles: string[] = [];
   userDetails = {};
+
+  ALL_BUSINESS_REF = { id: null, name: 'TOOLBAR.ALL_BUSINESS_NAME'};
 
   constructor(
     private fuseConfig: FuseConfigService,
@@ -44,12 +47,28 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userRoles = this.keycloakService.getUserRoles(true);
-    of(this.keycloakService.getUserRoles(true).includes("PLATFORM-ADMIN"))
+    of(this.keycloakService.getUserRoles(true).includes('PLATFORM-ADMIN'))
       .pipe(
-        mergeMap((isSysAdmin: boolean) =>
-          isSysAdmin ? of(null) : this.searchBarService.getUserBusiness$()
+        tap(ispa => console.log('IS PLATFORM ADMIN ==> ', ispa)),
+        mergeMap((isSysAdmin: boolean) => isSysAdmin
+          ? of({})
+          .pipe(
+            delay(50),
+            mapTo({
+              data: {
+                myBusiness: {
+                  _id: this.ALL_BUSINESS_REF.id,
+                  generalInfo: {
+                    name: this.translationLoader.getTranslate().instant(this.ALL_BUSINESS_REF.name)
+                  }
+                }
+              }
+            }),
+            tap(r => console.log('###################', r))
+          )
+          : this.searchBarService.getUserBusiness$()
         ),
-        filter(result => result && !result.erros),
+        // filter(result => result && !result.erros),
         map(rawResponse => (rawResponse ? rawResponse.data.myBusiness : null)),
         filter(result => result !== null),
         map(response => ({
@@ -93,24 +112,35 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
   }
 
   displayFn(business) {
-    return business ? business.name : "";
+    return business ? business.name : '';
   }
 
   getBusinessFiltered$(filterText: string): Observable<any[]> {
-    return (
-      this.searchBarService
-        .getFilteredBusinessList$(filterText, 10)
-        .pipe(
-          filter((resp: any) => !resp.errors),
-          map(result => result.data.getBusinesses),
-          mergeMap(results =>
-            from(results).pipe(
-              map((bu: any) => ({ id: bu._id, name: bu.generalInfo.name })),
-              toArray()
-            )
-          ),
-          takeUntil(this.ngUnsubscribe)
-        )
-    );
+    return this.searchBarService
+      .getFilteredBusinessList$(filterText, 10)
+      .pipe(
+        filter((resp: any) => !resp.errors),
+        map(result => result.data.getBusinesses),
+        mergeMap(results =>
+          from(results).pipe(
+            map((bu: any) => ({ id: bu._id, name: bu.generalInfo.name })),
+            toArray()
+          )
+        ),
+        map(response => ([...response, {
+          id: this.ALL_BUSINESS_REF.id,
+          name: this.translationLoader.getTranslate().instant(this.ALL_BUSINESS_REF.name)
+        }])),
+        takeUntil(this.ngUnsubscribe)
+      );
+
+    // return of({})
+    // .pipe(
+    //   mapTo([ {id: '12345', name: 'nebula_test'} ]),
+    //   map(response => ([...response, {
+    //     id: this.ALL_BUSINESS_REF.id,
+    //     name: this.translationLoader.getTranslate().instant(this.ALL_BUSINESS_REF.name)
+    //   } ]))
+    // );
   }
 }

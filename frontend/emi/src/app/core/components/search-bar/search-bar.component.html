@@ -3,7 +3,8 @@
     <label for="fuse-search-bar-input">
       <button *ngIf="collapsed && userRoles.includes('PLATFORM-ADMIN')" mat-icon-button class="fuse-search-bar-expander"
         aria-label="Expand Search Bar" (click)="expand()">
-        <mat-icon class="s-24">search</mat-icon>
+        <mat-icon *ngIf="selectedBU && selectedBU.id !== null" class="s-24">account_balance</mat-icon>
+        <mat-icon *ngIf="!selectedBU || selectedBU.id === null" class="s-24">search</mat-icon>
       </button>
       <!--<span class="fuse-search-bar-loader" fxLayout="row" fxLayoutAlign="center center" *ngIf="!collapsed">
                     <mat-progress-spinner color="mat-accent" mode="indeterminate"></mat-progress-spinner>

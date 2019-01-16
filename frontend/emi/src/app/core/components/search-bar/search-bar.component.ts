@@ -73,7 +73,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
                   map((userDetails: any) => ({
                       data: {
                         myBusiness: {
-                          _id: userDetails['attributes']['businessId'] || 'd3d3d3-d333',
+                          _id: userDetails['attributes']['businessId'],
                           generalInfo: {
                             name: this.translationLoader.getTranslate().instant('TOOLBAR.MY_BUSINESS')
                           }

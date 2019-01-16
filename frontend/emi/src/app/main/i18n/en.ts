@@ -9,7 +9,8 @@ export const locale = {
       SHORTCUT_SEARCH: 'Search for an app or a page',
       SHORTCUT_EMPTY: 'No shortcuts yet!',
       COPY_TO_CLIPBOARD: 'JWT',
-      ALL_BUSINESS_NAME: 'All businesses'
+      ALL_BUSINESS_NAME: 'All businesses',
+      MY_BUSINESS: 'My business'
     },
     ITEMS_PER_PAGE: 'Item per page',
     NEXT_PAGE: 'Next page',

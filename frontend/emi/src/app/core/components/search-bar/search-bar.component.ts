@@ -5,8 +5,8 @@ import { locale as english } from '../../../main/i18n/en';
 import { locale as spanish } from '../../../main/i18n/es';
 import { FuseTranslationLoaderService } from '../../services/translation-loader.service';
 import { Observable } from 'rxjs/Observable';
-import { fromEvent, Subject, of, defer, from } from 'rxjs';
-import { debounceTime, distinctUntilChanged, mergeMap, filter, map, takeUntil, tap, mapTo, toArray, startWith, delay } from 'rxjs/operators';
+import { fromEvent, Subject, of, defer, from, forkJoin } from 'rxjs';
+import { debounceTime, distinctUntilChanged, mergeMap, filter, map, takeUntil, tap, mapTo, toArray, startWith, delay, catchError } from 'rxjs/operators';
 import { SearchBarService } from './search-bar.service';
 import { KeycloakService } from 'keycloak-angular';
 
@@ -50,23 +50,39 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
     of(this.keycloakService.getUserRoles(true).includes('PLATFORM-ADMIN'))
       .pipe(
         tap(ispa => console.log('IS PLATFORM ADMIN ==> ', ispa)),
+        delay(500),
         mergeMap((isSysAdmin: boolean) => isSysAdmin
           ? of({})
-          .pipe(
-            delay(50),
-            mapTo({
-              data: {
-                myBusiness: {
-                  _id: this.ALL_BUSINESS_REF.id,
-                  generalInfo: {
-                    name: this.translationLoader.getTranslate().instant(this.ALL_BUSINESS_REF.name)
+            .pipe(
+              delay(50),
+              mapTo({
+                data: {
+                  myBusiness: {
+                    _id: this.ALL_BUSINESS_REF.id,
+                    generalInfo: {
+                      name: this.translationLoader.getTranslate().instant(this.ALL_BUSINESS_REF.name)
+                    }
                   }
                 }
-              }
-            }),
-            tap(r => console.log('###################', r))
-          )
+              })
+            )
           : this.searchBarService.getUserBusiness$()
+            .pipe(
+              catchError(error => defer(() => this.keycloakService.loadUserProfile())
+                .pipe(
+                  map((userDetails: any) => ({
+                      data: {
+                        myBusiness: {
+                          _id: userDetails['attributes']['businessId'] || 'd3d3d3-d333',
+                          generalInfo: {
+                            name: this.translationLoader.getTranslate().instant('TOOLBAR.MY_BUSINESS')
+                          }
+                        }
+                      }
+                    }
+                  ))
+                ))
+            )
         ),
         // filter(result => result && !result.erros),
         map(rawResponse => (rawResponse ? rawResponse.data.myBusiness : null)),
@@ -75,16 +91,24 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
           id: response._id,
           name: response.generalInfo.name
         })),
+        tap( bu => this.selectedBU = bu),
         map(bu => this.onBusinessSelected.next(bu))
       )
-      .subscribe(r => {}, e => console.log(e), () => {});
+      .subscribe(r => console.log('##################', this.selectedBU), e => console.log(e), () => {});
 
     this.businessQueryFiltered$ = fromEvent(this.inputFilter.nativeElement, 'keyup')
       .pipe(
         startWith(''),
         debounceTime(500),
         distinctUntilChanged(),
-        mergeMap(() => this.getBusinessFiltered$(this.inputFilter.nativeElement.value))
+        mergeMap(() => this.getBusinessFiltered$(this.inputFilter.nativeElement.value)),
+        catchError(error => defer(() => this.keycloakService.loadUserProfile())
+          .pipe(
+            map((userDetails: any) => ([{
+              id: userDetails['attributes']['businessId'],
+              name: this.translationLoader.getTranslate().instant('TOOLBAR.MY_BUSINESS')
+            }]))
+          ))
       );
   }
 
@@ -98,7 +122,9 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
   }
 
   expand() {
-    this.collapsed = false;
+    if (this.userRoles.includes('PLATFORM-ADMIN')){
+      this.collapsed = false;
+    }
   }
 
   // search(event) {

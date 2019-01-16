@@ -37,7 +37,8 @@
             <!-- <input type="text" [(ngModel)]="businessSelected.name" style="width: auto"> -->
             <p style="font-size: 12px; padding-left: 5px" fxHide.gt-xs>{{businessSelected.name}}</p>
             <p style="font-size: 18px; padding-left: 5px" fxHide fxShow.gt-xs>{{businessSelected.name}}</p>
-            <button mat-button *ngIf="businessSelected" matSuffix mat-icon-button aria-label="Clear" (click)="search(null)">
+            <button *ngIf="userRoles.includes('PLATFORM-ADMIN') && businessSelected"
+              mat-button matSuffix mat-icon-button aria-label="Clear" (click)="search(null)">
               <mat-icon>close</mat-icon>
             </button>
           </div>

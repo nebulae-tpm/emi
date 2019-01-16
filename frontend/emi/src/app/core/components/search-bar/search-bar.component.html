@@ -1,7 +1,7 @@
 <div class="fuse-search-bar" [ngClass]="{ expanded: !collapsed }" fxFlex="0 1 auto" >
   <div [ngClass]="toolbarColor" fxLayout="row" fxLayoutAlign="start center" fxFlex >
     <label for="fuse-search-bar-input">
-      <button *ngIf="collapsed && userRoles.includes('PLATFORM-ADMIN')" mat-icon-button class="fuse-search-bar-expander"
+      <button *ngIf="collapsed" mat-icon-button class="fuse-search-bar-expander"
         aria-label="Expand Search Bar" (click)="expand()">
         <mat-icon *ngIf="selectedBU && selectedBU.id !== null" class="s-24">account_balance</mat-icon>
         <mat-icon *ngIf="!selectedBU || selectedBU.id === null" class="s-24">search</mat-icon>

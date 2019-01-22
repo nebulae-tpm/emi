@@ -159,14 +159,5 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
         }])),
         takeUntil(this.ngUnsubscribe)
       );
-
-    // return of({})
-    // .pipe(
-    //   mapTo([ {id: '12345', name: 'nebula_test'} ]),
-    //   map(response => ([...response, {
-    //     id: this.ALL_BUSINESS_REF.id,
-    //     name: this.translationLoader.getTranslate().instant(this.ALL_BUSINESS_REF.name)
-    //   } ]))
-    // );
   }
 }

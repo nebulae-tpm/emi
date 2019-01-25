@@ -73,7 +73,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
                   map((userDetails: any) => ({
                       data: {
                         myBusiness: {
-                          _id: userDetails['attributes']['businessId'],
+                          _id: userDetails['attributes']['businessId'][0],
                           generalInfo: {
                             name: this.translationLoader.getTranslate().instant('TOOLBAR.MY_BUSINESS')
                           }
@@ -105,7 +105,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
         catchError(error => defer(() => this.keycloakService.loadUserProfile())
           .pipe(
             map((userDetails: any) => ([{
-              id: userDetails['attributes']['businessId'],
+              id: userDetails['attributes']['businessId'][0],
               name: this.translationLoader.getTranslate().instant('TOOLBAR.MY_BUSINESS')
             }]))
           ))

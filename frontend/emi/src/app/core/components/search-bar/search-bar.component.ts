@@ -55,7 +55,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
           ? of({})
             .pipe(
               delay(50),
-              mapTo({
+              map(() => ({
                 data: {
                   myBusiness: {
                     _id: this.ALL_BUSINESS_REF.id,
@@ -64,12 +64,14 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
                     }
                   }
                 }
-              })
+              }))
             )
           : this.searchBarService.getUserBusiness$()
             .pipe(
-              catchError(error => defer(() => this.keycloakService.loadUserProfile())
+              tap(r => console.log('################ MY BUSINESS IS => ', r) ),
+              catchError(error => defer(() => this.keycloakService.loadUserProfile() )
                 .pipe(
+                  tap(ud => console.log(error, 'USER DETAILS ==> ', ud)),
                   map((userDetails: any) => ({
                       data: {
                         myBusiness: {
@@ -85,6 +87,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
             )
         ),
         // filter(result => result && !result.erros),
+        tap(r => console.log('FOUND BUSINESS =>', r) ),
         map(rawResponse => (rawResponse ? rawResponse.data.myBusiness : null)),
         filter(result => result !== null),
         map(response => ({
@@ -94,7 +97,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
         tap( bu => this.selectedBU = bu),
         map(bu => this.onBusinessSelected.next(bu))
       )
-      .subscribe(r => console.log('##################', this.selectedBU), e => console.log(e), () => {});
+      .subscribe(r => {}, e => console.log(e), () => {});
 
     this.businessQueryFiltered$ = fromEvent(this.inputFilter.nativeElement, 'keyup')
       .pipe(
@@ -105,7 +108,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
         catchError(error => defer(() => this.keycloakService.loadUserProfile())
           .pipe(
             map((userDetails: any) => ([{
-              id: userDetails['attributes']['businessId'][0],
+              id: userDetails['attributes']['businessId'] ?  userDetails['attributes']['businessId'][0] : null,
               name: this.translationLoader.getTranslate().instant('TOOLBAR.MY_BUSINESS')
             }]))
           ))

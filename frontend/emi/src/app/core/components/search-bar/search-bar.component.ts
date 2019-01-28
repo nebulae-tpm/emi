@@ -49,7 +49,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
     this.userRoles = this.keycloakService.getUserRoles(true);
     of(this.keycloakService.getUserRoles(true).includes('PLATFORM-ADMIN'))
       .pipe(
-        tap(ispa => console.log('IS PLATFORM ADMIN ==> ', ispa)),
+        // tap(ispa => console.log('IS PLATFORM ADMIN ==> ', ispa)),
         delay(500),
         mergeMap((isSysAdmin: boolean) => isSysAdmin
           ? of({})
@@ -62,10 +62,10 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
             )
           : this.searchBarService.getUserBusiness$()
             .pipe(
-              tap(r => console.log('################ MY BUSINESS IS => ', r)),
+              // tap(r => console.log('################ MY BUSINESS IS => ', r)),
               catchError(error => defer(() => this.keycloakService.loadUserProfile())
                 .pipe(
-                  tap(ud => console.log(error, 'USER DETAILS ==> ', ud)),
+                  // tap(ud => console.log(error, 'USER DETAILS ==> ', ud)),
                   mergeMap((userDetails: any) =>
                     this.buildBusinessResponse$(
                       userDetails['attributes']['businessId'][0],
@@ -76,7 +76,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy {
             )
         ),
         // filter(result => result && !result.erros),
-        tap(r => console.log('FOUND BUSINESS =>', r) ),
+        // tap(r => console.log('FOUND BUSINESS =>', r) ),
         map(rawResponse => (rawResponse ? rawResponse.data.myBusiness : null)),
         filter(result => result !== null),
         map(response => ({

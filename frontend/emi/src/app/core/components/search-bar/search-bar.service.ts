@@ -21,14 +21,14 @@ export class SearchBarService {
   }
 
   getUserBusiness$() {
-    console.log('SEARCHING MY BUSINESS');
+    // console.log('SEARCHING MY BUSINESS');
     return this.gateway.apollo.query<any>({
       query: getMyBusiness,
       fetchPolicy: 'network-only',
       errorPolicy: 'all'
-    })
-    .pipe(
-      tap(r => console.log('RESPONSE => ', r))
-    );
+    });
+    // .pipe(
+    //   tap(r => console.log('RESPONSE => ', r))
+    // );
   }
 }

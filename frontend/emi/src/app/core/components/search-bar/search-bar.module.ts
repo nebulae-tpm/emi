@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../../modules/shared.module';
 import { FuseSearchBarComponent } from './search-bar.component';
-import { SearchBarService } from './search-bar.service';
 
 @NgModule({
     declarations: [
@@ -15,8 +14,7 @@ import { SearchBarService } from './search-bar.service';
     ],
     exports     : [
         FuseSearchBarComponent
-    ],
-    providers: [ SearchBarService ]
+    ]
 })
 export class FuseSearchBarModule
 {

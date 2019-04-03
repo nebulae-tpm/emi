@@ -14,10 +14,8 @@
     "lib": [
       "es2017",
       "dom",
-      "esnext"
-    ],
-    "module": "es2015",
-    "baseUrl": "./"
+      "esnext",
+    ]
   },
   "angularCompilerOptions": {
     "genDir": "release/",

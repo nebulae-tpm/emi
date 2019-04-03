@@ -8,9 +8,7 @@ export const locale = {
       SHORTCUT_TOOLTIP: 'Click para agregar/remover atajos',
       SHORTCUT_SEARCH: 'Buscar por una app o una pagina',
       SHORTCUT_EMPTY: 'No se tiene atajos aún',
-      COPY_TO_CLIPBOARD: 'JWT',
-      ALL_BUSINESS_NAME: 'Todos los negocios',
-      MY_BUSINESS: 'Mi negocio'
+      COPY_TO_CLIPBOARD: 'JWT'
     },
     ITEMS_PER_PAGE: 'Ítem por página',
     NEXT_PAGE: 'Siguiente página',

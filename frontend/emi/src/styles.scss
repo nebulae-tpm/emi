@@ -1,6 +1,2 @@
 // Import Fuse main library
 @import "app/core/scss/core";
-
-@import '~@coachcare/datepicker/theming';
-
-@include mat-datepicker-theme($theme);
